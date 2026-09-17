@@ -1,0 +1,341 @@
+Materia: Bases de Datos
+Carrera: Ingeniería Informática – UNSTA
+Profesor: Ing. Tulio Ruesjas Martín
+
+
+📋 PARTE 1: GESTIÓN DE CAMPAÑAS DE MARKETING DIGITAL
+
+📊 Diagrama de Clases — Resumen
+
+* Campaña ↔️ Plataforma: Relación muchos a muchos (una campaña en varias plataformas; una plataforma tiene varias campañas)
+
+* Conversión: Clase que representa la tabla intermedia, conecta Campaña y Plataforma
+
+💻 Código Java
+
+1. Clase Campaña
+package com.example.marketingdigital;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Campaña {
+    private Long idCampana;
+    private String nombreCampana;
+    private Double presupuesto;
+    private LocalDate fechaInicio;
+    private List<Conversión> conversiones;
+
+    public Campaña() {
+        this.conversiones = new ArrayList<>();
+    }
+
+    public Campaña(Long idCampana, String nombreCampana, Double presupuesto, LocalDate fechaInicio) {
+        this.idCampana = idCampana;
+        this.nombreCampana = nombreCampana;
+        this.presupuesto = presupuesto;
+        this.fechaInicio = fechaInicio;
+        this.conversiones = new ArrayList<>();
+    }
+
+    // Getters y Setters
+    public Long getIdCampana() { return idCampana; }
+    public void setIdCampana(Long idCampana) { this.idCampana = idCampana; }
+    public String getNombreCampana() { return nombreCampana; }
+    public void setNombreCampana(String nombreCampana) { this.nombreCampana = nombreCampana; }
+    public Double getPresupuesto() { return presupuesto; }
+    public void setPresupuesto(Double presupuesto) { this.presupuesto = presupuesto; }
+    public LocalDate getFechaInicio() { return fechaInicio; }
+    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
+    public List<Conversión> getConversiones() { return conversiones; }
+    public void agregarConversion(Conversión conversion) {
+        this.conversiones.add(conversion);
+    }
+}
+1. Clase Plataforma
+package com.example.marketingdigital;
+
+public class Plataforma {
+    private Long idPlataforma;
+    private String nombrePlataforma;
+    private String urlPlataforma;
+
+    public Plataforma() {}
+
+    public Plataforma(Long idPlataforma, String nombrePlataforma, String urlPlataforma) {
+        this.idPlataforma = idPlataforma;
+        this.nombrePlataforma = nombrePlataforma;
+        this.urlPlataforma = urlPlataforma;
+    }
+
+    // Getters y Setters
+    public Long getIdPlataforma() { return idPlataforma; }
+    public void setIdPlataforma(Long idPlataforma) { this.idPlataforma = idPlataforma; }
+    public String getNombrePlataforma() { return nombrePlataforma; }
+    public void setNombrePlataforma(String nombrePlataforma) { this.nombrePlataforma = nombrePlataforma; }
+    public String getUrlPlataforma() { return urlPlataforma; }
+    public void setUrlPlataforma(String urlPlataforma) { this.urlPlataforma = urlPlataforma; }
+}
+1. Clase Conversión
+package com.example.marketingdigital;
+
+import java.time.LocalDateTime;
+
+public class Conversión {
+    private Long idConversion;
+    private String tipoConversion;
+    private Double valor;
+    private LocalDateTime fechaConversion;
+    private Campaña campaña;
+    private Plataforma plataforma;
+
+    public Conversión() {}
+
+    public Conversión(Long idConversion, String tipoConversion, Double valor, 
+                      LocalDateTime fechaConversion, Campaña campaña, Plataforma plataforma) {
+        this.idConversion = idConversion;
+        this.tipoConversion = tipoConversion;
+        this.valor = valor;
+        this.fechaConversion = fechaConversion;
+        this.campaña = campaña;
+        this.plataforma = plataforma;
+    }
+
+    // Getters y Setters
+    public Long getIdConversion() { return idConversion; }
+    public void setIdConversion(Long idConversion) { this.idConversion = idConversion; }
+    public String getTipoConversion() { return tipoConversion; }
+    public void setTipoConversion(String tipoConversion) { this.tipoConversion = tipoConversion; }
+    public Double getValor() { return valor; }
+    public void setValor(Double valor) { this.valor = valor; }
+    public LocalDateTime getFechaConversion() { return fechaConversion; }
+    public void setFechaConversion(LocalDateTime fechaConversion) { this.fechaConversion = fechaConversion; }
+    public Campaña getCampaña() { return campaña; }
+    public void setCampaña(Campaña campaña) { this.campaña = campaña; }
+    public Plataforma getPlataforma() { return plataforma; }
+    public void setPlataforma(Plataforma plataforma) { this.plataforma = plataforma; }
+}
+📋 PARTE 2: GESTIÓN DE COMUNIDAD DE VIDEOJUEGOS
+
+📊 Diagrama de Clases — Resumen
+
+* Usuario crea muchas Publicaciones (1 a muchos)
+
+* Usuario reacciona a muchas publicaciones; una Publicación recibe muchas reacciones → Reaccion es la tabla intermedia
+
+💻 Código Java
+
+1. Clase Usuario
+package com.example.comunidadvg;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Usuario {
+    private Long idUsuario;
+    private String nombreUsuario;
+    private LocalDate fechaRegistro;
+    private List<Publicacion> misPublicaciones;
+    private List<Reaccion> misReacciones;
+
+    public Usuario() {
+        this.misPublicaciones = new ArrayList<>();
+        this.misReacciones = new ArrayList<>();
+    }
+
+    public Usuario(Long idUsuario, String nombreUsuario, LocalDate fechaRegistro) {
+        this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.fechaRegistro = fechaRegistro;
+        this.misPublicaciones = new ArrayList<>();
+        this.misReacciones = new ArrayList<>();
+    }
+
+    // Getters y Setters
+    public Long getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(Long idUsuario) { this.idUsuario = idUsuario; }
+    public String getNombreUsuario() { return nombreUsuario; }
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+    public LocalDate getFechaRegistro() { return fechaRegistro; }
+    public void setFechaRegistro(LocalDate fechaRegistro) { this.fechaRegistro = fechaRegistro; }
+    
+    public List<Publicacion> getMisPublicaciones() { return misPublicaciones; }
+    public void crearPublicacion(Publicacion nueva) {
+        this.misPublicaciones.add(nueva);
+    }
+    public List<Reaccion> getMisReacciones() { return misReacciones; }
+    public void reaccionar(Reaccion reaccion) {
+        this.misReacciones.add(reaccion);
+    }
+}
+1. Clase Publicacion
+package com.example.comunidadvg;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Publicacion {
+    private Long idPublicacion;
+    private String contenido;
+    private LocalDateTime fechaPublicacion;
+    private Usuario autorDePost;
+    private List<Reaccion> reacciones;
+
+    public Publicacion() {
+        this.reacciones = new ArrayList<>();
+    }
+
+    public Publicacion(Long idPublicacion, String contenido, LocalDateTime fechaPublicacion, Usuario autorDePost) {
+        this.idPublicacion = idPublicacion;
+        this.contenido = contenido;
+        this.fechaPublicacion = fechaPublicacion;
+        this.autorDePost = autorDePost;
+        this.reacciones = new ArrayList<>();
+    }
+
+    // Getters y Setters
+    public Long getIdPublicacion() { return idPublicacion; }
+    public void setIdPublicacion(Long idPublicacion) { this.idPublicacion = idPublicacion; }
+    public String getContenido() { return contenido; }
+    public void setContenido(String contenido) { this.contenido = contenido; }
+    public LocalDateTime getFechaPublicacion() { return fechaPublicacion; }
+    public void setFechaPublicacion(LocalDateTime fechaPublicacion) { this.fechaPublicacion = fechaPublicacion; }
+    public Usuario getAutorDePost() { return autorDePost; }
+    public void setAutorDePost(Usuario autorDePost) { this.autorDePost = autorDePost; }
+    
+    public List<Reaccion> getReacciones() { return reacciones; }
+    public void agregarReaccion(Reaccion r) {
+        this.reacciones.add(r);
+    }
+}
+1. Clase Reaccion
+package com.example.comunidadvg;
+
+import java.time.LocalDateTime;
+
+public class Reaccion {
+    private Long idReaccion;
+    private String tipoReaccion;
+    private LocalDateTime fechaReaccion;
+    private Usuario usuario;
+    private Publicacion publicacion;
+
+    public Reaccion() {}
+
+    public Reaccion(Long idReaccion, String tipoReaccion, LocalDateTime fechaReaccion,
+                    Usuario usuario, Publicacion publicacion) {
+        this.idReaccion = idReaccion;
+        this.tipoReaccion = tipoReaccion;
+        this.fechaReaccion = fechaReaccion;
+        this.usuario = usuario;
+        this.publicacion = publicacion;
+    }
+
+    // Getters y Setters
+    public Long getIdReaccion() { return idReaccion; }
+    public void setIdReaccion(Long idReaccion) { this.idReaccion = idReaccion; }
+    public String getTipoReaccion() { return tipoReaccion; }
+    public void setTipoReaccion(String tipoReaccion) { this.tipoReaccion = tipoReaccion; }
+    public LocalDateTime getFechaReaccion() { return fechaReaccion; }
+    public void setFechaReaccion(LocalDateTime fechaReaccion) { this.fechaReaccion = fechaReaccion; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Publicacion getPublicacion() { return publicacion; }
+    public void setPublicacion(Publicacion publicacion) { this.publicacion = publicacion; }
+}
+🚀 CLASE DE PRUEBA — AcademiaRunner
+
+Ubicación: src/main/java/com/example/proyecto/runner/AcademiaRunner.java
+package com.example.proyecto.runner;
+
+import com.example.marketingdigital.*;
+import com.example.comunidadvg.*;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Component
+public class AcademiaRunner implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("=== INICIO PRUEBA: SISTEMA DE CAMPAÑAS DE MARKETING ===");
+        
+        // 1. Crear plataformas
+        Plataforma googleAds = new Plataforma(1L, "Google Ads", "https://ads.google.com");
+        Plataforma metaAds = new Plataforma(2L, "Meta Ads", "https://business.facebook.com");
+        
+        // 2. Crear campaña
+        Campaña campañaVerano = new Campaña(1L, "Promoción Verano 2026", 50000.0, LocalDate.of(2026, 11, 1));
+        
+        // 3. Registrar conversiones
+        Conversión conv1 = new Conversión(1L, "venta", 150.0, 
+                LocalDateTime.of(2026, 11, 2, 14, 30), campañaVerano, googleAds);
+        Conversión conv2 = new Conversión(2L, "registro", 0.0, 
+                LocalDateTime.of(2026, 11, 2, 16, 15), campañaVerano, metaAds);
+        
+        campañaVerano.agregarConversion(conv1);
+        campañaVerano.agregarConversion(conv2);
+        
+        // Mostrar datos
+        System.out.println("Campaña: " + campañaVerano.getNombreCampana());
+        System.out.println("Presupuesto: $" + campañaVerano.getPresupuesto());
+        System.out.println("Conversiones registradas: " + campañaVerano.getConversiones().size());
+        campañaVerano.getConversiones().forEach(c -> 
+                System.out.println("  - " + c.getTipoConversion() + " en " + c.getPlataforma().getNombrePlataforma()
+                        + " | Valor: $" + c.getValor()));
+
+        System.out.println("\n=== INICIO PRUEBA: COMUNIDAD DE VIDEOJUEGOS ===");
+        
+        // 1. Crear usuario
+        Usuario usuario1 = new Usuario(1L, "GamerTucuman", LocalDate.of(2026, 3, 15));
+        
+        // 2. Crear publicación
+        Publicacion post1 = new Publicacion(1L, "¡Alguien para jugar en equipo esta noche!",
+                LocalDateTime.of(2026, 9, 10, 20, 45), usuario1);
+        usuario1.crearPublicacion(post1);
+        
+        // 3. Otro usuario reacciona
+        Usuario usuario2 = new Usuario(2L, "ArnedoJ", LocalDate.of(2026, 5, 20));
+        Reaccion reaccion1 = new Reaccion(1L, "corazón", LocalDateTime.of(2026, 9, 11, 8, 10), usuario2, post1);
+        usuario2.reaccionar(reaccion1);
+        post1.agregarReaccion(reaccion1);
+        
+        // Mostrar datos
+        System.out.println("Usuario: " + usuario1.getNombreUsuario());
+        System.out.println("Publicación: " + post1.getContenido());
+        System.out.println("Reacciones: " + post1.getReacciones().size());
+        post1.getReacciones().forEach(r ->
+                System.out.println("  - " + r.getUsuario().getNombreUsuario() + " le dio " 
+                        + r.getTipoReaccion() + " el " + r.getFechaReaccion().toLocalDate()));
+
+        System.out.println("\n✅ Todo funcionó correctamente. Fin de la ejecución.");
+    }
+}
+📝 EXPLICACIÓN DE LO HECHO
+
+📌 Parte 1 — Campañas de Marketing
+
+* Modelamos las tres entidades tal cual pide el enunciado: Campaña, Plataforma y Conversión.
+
+* La clase Conversión actúa como tabla intermedia porque vincula cada evento con su campaña y su plataforma de origen. Así podemos saber exactamente qué plataforma generó cada resultado.
+
+* Cada conversión tiene su propio valor y tipo, lo que permite calcular el retorno de inversión por plataforma.
+
+📌 Parte 2 — Comunidad de Videojuegos
+
+* La relación entre usuarios y publicaciones es sencilla: un usuario es autor de sus posts.
+
+* Las reacciones necesitan una tabla intermedia porque es una relación muchos a muchos: un usuario puede reaccionar a muchas publicaciones, y una publicación puede recibir reacciones de muchos usuarios. Por eso creamos la clase Reaccion con referencias a ambos lados.
+
+📌 Sobre la estructura del proyecto
+
+* El código está organizado en paquetes separados para cada sistema: marketingdigital y comunidadvg.
+
+* La clase AcademiaRunner está en el paquete runner como indicó el profesor.
+
+* Usamos java.time para las fechas que es lo recomendado en versiones actuales de Java.
